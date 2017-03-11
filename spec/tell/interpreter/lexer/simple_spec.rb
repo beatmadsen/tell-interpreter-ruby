@@ -12,7 +12,7 @@ RSpec.describe Tell::Interpreter::Lexer::Simple do
 
       context "containing #{description} snippet" do
         let(:snippet) { s }
-        it 'finds :class token only' do
+        it "finds #{expected_token.inspect} token only" do
           tokens = lexer.tokens
           expect(tokens.size).to eq 1
           expect(tokens.first).to eq expected_token
