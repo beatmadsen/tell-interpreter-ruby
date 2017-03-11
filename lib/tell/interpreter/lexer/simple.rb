@@ -13,6 +13,8 @@ module Tell
             [:class]
           when '.'
             [:dot]
+          when 'namespace'
+            [:namespace]
           else
             []
           end
