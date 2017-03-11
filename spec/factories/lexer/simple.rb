@@ -3,5 +3,4 @@ FactoryGirl.define do
     text 'yo'
     initialize_with { new(text) }
   end
-
 end

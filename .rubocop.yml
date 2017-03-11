@@ -1,0 +1,21 @@
+
+Metrics/LineLength:
+  Max: 120
+Metrics/MethodLength:
+  Max: 20
+Metrics/ClassLength:
+  Max: 220
+Metrics/AbcSize:
+  Max: 35
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/**/*'
+
+
+# allow multiline `expect { ... }.to do_something`
+Style/BlockDelimiters:
+  Exclude:
+    - 'spec/**/*'
+
+Style/TrailingCommaInLiteral:
+  EnforcedStyleForMultiline: comma
