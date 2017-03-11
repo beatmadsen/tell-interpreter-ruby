@@ -1,0 +1,12 @@
+namespace com.madsen
+import tell.io.Io
+
+# Special keyword: 'main class'.
+# The entry point of the application.
+main class HelloWorld
+
+  pm run(*args)
+    io = Io.new
+    io.puts('Hello World') # prints Hello World
+  end
+end
