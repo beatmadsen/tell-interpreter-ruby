@@ -37,14 +37,10 @@ module Tell
           result = []
           until @text.empty?
             count, token = consume_whitespace(@text)
-            puts "P1. Count is #{count}"
-            count, token = consume_token(@text) if count == 0
-            puts "P2. Count is #{count}"
-            count, token = consume_name(@text) if count == 0
-            puts "P3. Count is #{count}"
+            count, token = consume_token(@text) if count.zero?
+            count, token = consume_name(@text) if count.zero?
             result << token if token
             @text.slice!(0..count - 1)
-            puts ({ count: count, token: token, text: @text })
           end
           result
         end
@@ -64,7 +60,6 @@ module Tell
             return [0, nil] if children.empty?
             next unless children.size == 1
             child = children.first
-            puts "child is #{child.inspect}"
             return [0, nil] unless text.start_with?(child)
             token = lookup_token_sym(child)
             return [child.size, token]
