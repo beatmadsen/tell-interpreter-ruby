@@ -11,12 +11,16 @@ module Tell
           case @text
           when 'class'
             [:class]
+          when 'main class'
+            [:main_class]
           when '.'
             [:dot]
           when 'namespace'
             [:namespace]
+          when "\n"
+            [:linebreak]
           else
-            []
+            [[:name, @text]]
           end
         end
       end

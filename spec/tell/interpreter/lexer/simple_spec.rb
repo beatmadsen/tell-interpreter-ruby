@@ -6,16 +6,40 @@ RSpec.describe Tell::Interpreter::Lexer::Simple do
 
     [
       ['class', 'class', :class],
+      ['main class', 'main class', :main_class],
       ['dot', '.', :dot],
       ['namespace', 'namespace', :namespace],
-    ].each do |(description, s, expected_token)|
+      ['name', 'some_name', [:name, 'some_name']],
+      ['line break', "\n", :linebreak],
+    ].each do |(description, code, expected_token)|
 
       context "containing #{description} snippet" do
-        let(:snippet) { s }
+        let(:snippet) { code }
         it "finds #{expected_token.inspect} token only" do
           tokens = lexer.tokens
           expect(tokens.size).to eq 1
           expect(tokens.first).to eq expected_token
+        end
+      end
+    end
+  end
+
+  context 'with multiple items in input' do
+    let(:lexer) { build(:lexer, text: snippet) }
+    [
+      [
+        'namespace declaration',
+        "namespace com.madsen\n",
+        [:namespace, [:name, 'com.madsen'], :linebreak],
+      ],
+    ].each do |(description, code, expected_tokens)|
+
+      context "containing #{description} snippet" do
+        let(:snippet) { code }
+        it "finds #{expected_tokens.inspect} tokens only" do
+          tokens = lexer.tokens
+          expect(tokens).to match_array expected_tokens
+          expect(tokens).to eq expected_tokens
         end
       end
     end
