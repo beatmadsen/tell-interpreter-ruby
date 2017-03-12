@@ -32,6 +32,15 @@ RSpec.describe Tell::Interpreter::Lexer::Simple do
         "namespace com.madsen\n",
         [:namespace, [:name, 'com.madsen'], :linebreak],
       ],
+      [
+        'import statement followed by main class declaration',
+        "import tell.io.Io\n\n\nmain class HelloWorld\n",
+        [:import, [:name, 'tell.io.Io'],
+          :linebreak, :linebreak, :linebreak,
+          :main_class, [:name, 'HelloWorld'],
+          :linebreak
+        ],
+      ],
     ].each do |(description, code, expected_tokens)|
 
       context "containing #{description} snippet" do

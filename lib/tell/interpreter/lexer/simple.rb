@@ -19,6 +19,7 @@ module Tell
               '.' => :dot,
               'namespace' => :namespace,
               "\n" => :linebreak,
+              'import' => :import,
             }
           end
 
@@ -42,8 +43,8 @@ module Tell
             count, token = consume_name(@text) if count == 0
             puts "P3. Count is #{count}"
             result << token if token
-            @text.slice!(0..count-1)
-            puts ({count: count, token: token, text: @text })
+            @text.slice!(0..count - 1)
+            puts ({ count: count, token: token, text: @text })
           end
           result
         end
@@ -63,9 +64,10 @@ module Tell
             return [0, nil] if children.empty?
             next unless children.size == 1
             child = children.first
+            puts "child is #{child.inspect}"
             return [0, nil] unless text.start_with?(child)
             token = lookup_token_sym(child)
-            return [token.size, token]
+            return [child.size, token]
           end
           raise 'failed while consuming token'
         end
@@ -89,10 +91,6 @@ module Tell
           text.each_char do |c|
             case c
             when ' ', "\t", "\r"
-              count += 1
-            when "\n"
-              # don't match newline if it's the first encountered char
-              return [count, token] unless count >= 1
               count += 1
             else
               return [count, token]
